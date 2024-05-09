@@ -19,7 +19,7 @@ def login():
     if verificar_credenciais(usuario, senha):
         print("Login bem-sucedido!")
     else:
-        msg = CTkMessagebox(title="Erro", message="Falha no login", icon="cancel", width=200)
+        CTkMessagebox(master=login_frame, title="Erro", message="Falha no login", icon="cancel", cancel_button="cross", width=300, height=100, button_width=100, justify="center", corner_radius=18, icon_size=(30, 30), fade_in_duration=1)
         print(usuario)
         print(senha)
 
@@ -29,12 +29,12 @@ janela_login = customtkinter.CTk()
 janela_login.title("Login")
 janela_login.geometry("600x440")
 
-img1 = ImageTk.PhotoImage(Image.open("images/pattern.png")) 
+img1 = customtkinter.CTkImage(dark_image=Image.open("images/pattern.png"),  size=(600, 440))
 img2 = customtkinter.CTkImage(dark_image=Image.open("images/logo.png"),  size=(220, 55))
 
 
 background = customtkinter.CTkLabel(master=janela_login, image=img1)
-background.pack()
+background.grid(row=0, column=0)
 
 login_frame = customtkinter.CTkFrame(master=janela_login, width=320, height=360, corner_radius=15)
 login_frame.place(relx=0.5, rely=0.5, anchor="center")
