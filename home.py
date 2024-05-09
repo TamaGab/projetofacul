@@ -32,11 +32,11 @@ logo = customtkinter.CTkLabel(master=menu, text="", image=CTkImage(dark_image=im
 logo.place(relx=0.5, rely=0.07, anchor="n")
 
 user_button = customtkinter.CTkButton(master=menu, width=260, height=40, text="Aluno", fg_color="transparent", corner_radius=6, hover_color="#4F5250", font=("Century Gothic", 18), text_color="#FFFFFF",image=CTkImage(dark_image=userImage), anchor='w')
-user_button.place(relx=0.5, rely=0.18, anchor="n")
+user_button.place(relx=0.5, rely=0.17, anchor="n")
 user_button2 = customtkinter.CTkButton(master=menu, width=260, height=40, text="Notas", fg_color="transparent", corner_radius=6, hover_color="#4F5250", font=("Century Gothic", 18), text_color="#FFFFFF",image=CTkImage(dark_image=notaImage), anchor='w')
-user_button2.place(relx=0.5, rely=0.25, anchor="n")
+user_button2.place(relx=0.5, rely=0.24, anchor="n")
 user_button3 = customtkinter.CTkButton(master=menu, width=260, height=40, text="Matérias", fg_color="transparent", corner_radius=6, hover_color="#4F5250", font=("Century Gothic", 18), text_color="#FFFFFF",image=CTkImage(dark_image=materiaImage), anchor='w')
-user_button3.place(relx=0.5, rely=0.32, anchor="n")
+user_button3.place(relx=0.5, rely=0.31, anchor="n")
 
 
 
