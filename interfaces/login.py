@@ -61,7 +61,10 @@ def loginButton(event):
             print(senha)
             msg_box.bind("<Destroy>", on_messagebox_closed) # quando o widget msg_box for destruido, aplica o evento(funçao) on_messagebox_closed.
 
+
     
+
+        
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("green")
 app_login = customtkinter.CTk()

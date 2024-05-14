@@ -2,17 +2,12 @@ import customtkinter
 from PIL import Image
 from customtkinter import CTkButton, CTkEntry, CTkLabel, CTkFrame
 from tkinter import messagebox
+from login import appLogin
 
-def cadastrar_aluno():
-    # Obter os dados dos campos de entrada
-    nome = entry_nome.get()
-    email = entry_email.get()
-    senha = entry_senha.get()
 
-    # Aqui você pode adicionar a lógica para salvar os dados no banco de dados
-
-    # Exemplo simples de exibição dos dados
-    messagebox.showinfo("Cadastro de Aluno", f"Aluno cadastrado:\nNome: {nome}\nEmail: {email}\nSenha: {senha}\nCEP:")
+def loginButton():
+        app_signup.destroy()
+        appLogin()
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("green")
@@ -50,17 +45,19 @@ entry_confirmesenha = CTkEntry(master=frame_signup, width=300, placeholder_text=
 entry_confirmesenha.grid(row=4, column=0, columnspan=5, padx=20, pady=(15, 55))  
 
 button_signup = CTkButton(master=frame_signup, text="Cadastrar", width=300, height=35, fg_color="#41c269",
-                             corner_radius=32, hover_color="#4F5250", text_color="#FFFFFF",
-                             command=cadastrar_aluno, font=("Century Gothic", 16))
+                            corner_radius=32, hover_color="#4F5250", text_color="#FFFFFF",
+                            font=("Century Gothic", 16))
 button_signup.grid(row=5, column=0, columnspan=5, pady=(15, 15))  
 
 label_login = CTkLabel(master=frame_signup, text="Já possui uma conta? Conecte-se", font=("Century Gothic", 12), fg_color="transparent", text_color="#FFFFFF")
 label_login.grid(row=7, column=0, columnspan=5, pady=(5, 15))
 
 button_login = CTkButton(master=frame_signup, text="Conectar", width=300, height=35, fg_color="#4F5250",
-                             corner_radius=32, hover_color="#41c269", text_color="#FFFFFF",
-                              font=("Century Gothic", 16))
+                            corner_radius=32, hover_color="#41c269", text_color="#FFFFFF",
+                            font=("Century Gothic", 16), command=loginButton)
 button_login.grid(row=8, column=0, columnspan=5, pady=(0, 50))
 
 
 app_signup.mainloop()
+    
+    

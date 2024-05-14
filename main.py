@@ -1,3 +1,3 @@
-from login import appLogin
+from interfaces.login import appLogin
 
 appLogin()
