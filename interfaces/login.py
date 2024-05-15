@@ -98,7 +98,7 @@ button_login = customtkinter.CTkButton(master=frame_login, width=220, text="Logi
 button_login.place(x=50, y=270)
 
 button_login.bind("<Button-1>", loginButton)
-entry_password.bind("<Return>", loginButton)
+entry_password.bind("<Return>   ", loginButton)
 entry_user.bind("<Return>", lambda event: entry_password.focus_set())
 
 
