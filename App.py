@@ -96,18 +96,16 @@ class App(ctk.CTk):
                                           command=self.show_login_screen)
         self.button_login.grid(row=7, column=0, columnspan=5, pady=(5, 45))
 
-
     def show_home_screen(self):
-        
-
         self.clear_screen()
 
         self.bg_image_label = ctk.CTkLabel(self, image=self.bg_image, text="")
         self.bg_image_label.place(relwidth=1, relheight=1)
 
-        self.frame_menu = ctk.CTkFrame(self, width=50, height=self.height, corner_radius=0)
-        self.frame_menu.grid(row=0, column=0, sticky="ns")
-        self.frame_menu.grid_propagate(False)
+        self.frame_shrinkmenu = ctk.CTkFrame(self, width=50, height=self.height, corner_radius=0)
+        self.frame_shrinkmenu.grid(row=0, column=0, sticky="ns") 
+
+        self.frame_menu = ctk.CTkFrame(self, width=300, height=self.height, corner_radius=0)
 
         self.logo_label = ctk.CTkLabel(self.frame_menu, text="", image=self.logo_image)
         self.logo_label.grid(row=0, column=0, padx=50, pady=(30, 30))
@@ -115,6 +113,17 @@ class App(ctk.CTk):
         user_image = ctk.CTkImage(dark_image=Image.open("images/user.png"))
         nota_image = ctk.CTkImage(dark_image=Image.open("images/notas.png"))
         materia_image = ctk.CTkImage(dark_image=Image.open("images/calendar.png"))
+        logostar_image = ctk.CTkImage(dark_image=Image.open("images/logostar.png"))
+
+        self.logoicon = ctk.CTkLabel(self.frame_shrinkmenu, image=logostar_image, text="")
+        self.usericon = ctk.CTkLabel(self.frame_shrinkmenu, image=user_image, text="")
+        self.notaicon = ctk.CTkLabel(self.frame_shrinkmenu, image=nota_image, text="")
+        self.materiaicon = ctk.CTkLabel(self.frame_shrinkmenu, image=materia_image, text="")
+
+        self.logoicon.grid(row=0, column=0, padx=10, pady=(30, 30))
+        self.usericon.grid(row=1, column=0, padx=10, pady=(15, 15))
+        self.notaicon.grid(row=2, column=0, padx=10, pady=(15, 15))
+        self.materiaicon.grid(row=3, column=0, padx=10, pady=(15, 15))
 
         self.user_button = ctk.CTkButton(self.frame_menu, width=180, height=40, text="Aluno", fg_color="transparent", corner_radius=6,
                                         hover_color="#4F5250", font=("Century Gothic", 18), text_color="#FFFFFF",
@@ -131,21 +140,35 @@ class App(ctk.CTk):
                                         image=materia_image, anchor='w')
         self.user_button3.grid(row=3, column=0, padx=10, pady=(15, 15))
 
-        # Ensuring the frame_menu expands to fill the vertical space
         self.rowconfigure(0, weight=1)
 
-        # Hover effect for sidebar
-        for widget in [self.frame_menu, self.user_button, self.user_button2, self.user_button3, self.logo_label]:
-            widget.bind("<Enter>", lambda event, w=widget: expand_sidebar(event))
-            widget.bind("<Leave>", lambda event, w=widget: shrink_sidebar(event))
-            
         def expand_sidebar(event):
-            self.frame_menu.configure(width=200)  # Adjust the width as needed for expansion
-            self.frame_menu.grid_propagate(True)
+            if hasattr(self, 'shrink_sidebar_after_id'):
+                self.after_cancel(self.shrink_sidebar_after_id)
+            self.frame_menu.grid(row=0, column=0, sticky="ns")
+            self.frame_shrinkmenu.grid_forget()
 
-        def shrink_sidebar(event):
-            self.frame_menu.configure(width=50)  # Set back to original width
-            self.frame_menu.grid_propagate(False)
+        def shrink_sidebar(event=None):
+            self.frame_menu.grid_forget()
+            self.frame_shrinkmenu.grid(row=0, column=0, sticky="ns")
+
+
+        # Efeito de hover para expandir a barra lateral
+        self.frame_shrinkmenu.bind("<Enter>", expand_sidebar)
+
+        # Efeito de hover para encolher a barra lateral
+        self.frame_menu.bind("<Leave>", lambda event: setattr(self, 'shrink_sidebar_after_id', self.after(500, shrink_sidebar)))
+        # Efeito de hover para expandir a barra lateral
+        self.frame_menu.bind("<Enter>", expand_sidebar)
+
+        # Efeito de hover para encolher a barra lateral
+        self.frame_shrinkmenu.bind("<Leave>", lambda event: setattr(self, 'shrink_sidebar_after_id', self.after(500, shrink_sidebar)))
+
+        # Cancela o encolhimento da barra lateral quando o mouse está sobre os botões ou o logo
+        for widget in [self.user_button, self.user_button2, self.user_button3, self.logo_label, self.frame_menu]:
+            widget.bind("<Enter>", expand_sidebar)
+
+            
             
 
     def clear_screen(self):
