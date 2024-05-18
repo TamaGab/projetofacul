@@ -2,7 +2,6 @@
 from .database import *
 from ui.components.messagebox import show_invalid_password_message, show_invalid_cpf_message, show_missing_info_message, show_existing_email_message, show_invalid_passuser_message
 
-
 def auth_user(email, senha):
     
     db_connection, cursor = get_cursor()
@@ -12,7 +11,7 @@ def auth_user(email, senha):
     aluno = cursor.fetchone()  
 
     if aluno:  
-        if aluno[4] == senha:  
+        if aluno[4] == senha:
             close_connection(db_connection, cursor)
             return "aluno"
     else:
@@ -21,7 +20,7 @@ def auth_user(email, senha):
         professor = cursor.fetchone()  
 
         if professor: 
-            if professor[4] == senha:  
+            if professor[4] == senha:
                 close_connection(db_connection, cursor)
                 return "professor"
 

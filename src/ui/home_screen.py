@@ -2,6 +2,7 @@ import customtkinter as ctk
 from PIL import Image
 import os
 from ui.components.sidebar import Sidebar
+from ui.components.homewidgets import HomeWidgets
 
 class HomeScreen:
     def __init__(self, master, user_type):
@@ -15,3 +16,4 @@ class HomeScreen:
         self.bg_image_label = ctk.CTkLabel(self.master, image=self.bg_image, text="")
         self.bg_image_label.place(relwidth=1, relheight=1)
         self.sidebar = Sidebar(self.master, user_type)
+        self.homewidgetinit = HomeWidgets(self.master)._setup_widgets()

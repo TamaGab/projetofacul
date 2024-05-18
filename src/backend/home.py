@@ -1,4 +1,5 @@
 # src/backend/home.py
+from backend.database import *
 
 buttons_aluno = {
     "0": {
@@ -33,6 +34,26 @@ buttons_professor = {
         "nome": "Alunos Lecionado"
     },
 }
+
+
+def get_name(user_entry):
+    email = user_entry.get()
+    db_connection, cursor = get_cursor()
+    
+    query = "SELECT nome FROM aluno WHERE email = %s"
+    cursor.execute(query, (email,))
+    result = cursor.fetchone()
+    
+    close_connection(db_connection, cursor)
+    
+    if result:
+        return result[2]  
+    else:
+        return None 
+
+
+
+
 
 
 
