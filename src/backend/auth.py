@@ -1,28 +1,31 @@
 # src/backend/auth.py
 from .database import *
 from ui.components.messagebox import show_invalid_password_message, show_invalid_cpf_message, show_missing_info_message, show_existing_email_message, show_invalid_passuser_message
-from backend.session import session
+from backend.session import alunosession, professorsession
 
 def auth_user(email, senha):
     db_connection, cursor = get_cursor()
 
-    query_aluno = "SELECT * FROM aluno WHERE email = %s AND senha = %s OR email = 'gabriel@email.com'"
+    query_aluno = """
+    SELECT u.nome, u.email, a.id AS id_aluno, p.id AS id_professor
+    FROM usuarios u 
+    LEFT JOIN aluno a ON u.id = a.usuarios_id 
+    LEFT JOIN professor p ON u.id = p.usuarios_id
+    WHERE u.email = %s AND u.senha = %s
+    """
     cursor.execute(query_aluno, (email, senha,))
-    aluno = cursor.fetchone()
+    usuario = cursor.fetchone()
+    if usuario == None:
+        close_connection(db_connection, cursor)
+        return None
     
-    if aluno:
-        session.logged_name = aluno[2]
-        session.logged_email = aluno[3]
+    if usuario[2] != None:
+        alunosession.update(email)
         close_connection(db_connection, cursor)
         return "aluno"
-        
-    query_professor = "SELECT * FROM professor WHERE email = %s AND senha = %s"
-    cursor.execute(query_professor, (email, senha,))
-    professor = cursor.fetchone()
 
-    if professor:
-        session.logged_name = professor[2]
-        session.logged_email = professor[3]        
+    if usuario[3] != None:
+        professorsession.update(email)   
         close_connection(db_connection, cursor)
         return "professor"
     
@@ -37,7 +40,7 @@ def login_user(entry_user, entry_password, callback):
     if user_type:
         callback(user_type)
     else:
-        msgbox = show_invalid_passuser_message()
+        show_invalid_passuser_message()
 
 ##########################################################
 
@@ -45,7 +48,7 @@ def cpf_exist(cpf):
 
     db_connection, cursor = get_cursor()
     
-    query="SELECT * FROM aluno WHERE cpf = %s"
+    query="SELECT * FROM usuarios WHERE cpf = %s"
     cursor.execute(query, (cpf,))
     cpf = cursor.fetchone()
 
@@ -60,13 +63,13 @@ def add_infos(validatecpf, email, senha, cpf):
     if validatecpf:
         db_connection, cursor = get_cursor()
 
-        query_email = "SELECT email FROM aluno WHERE cpf = %s"
+        query_email = "SELECT email FROM usuarios WHERE cpf = %s"
         cursor.execute(query_email, (cpf,))
         exist_email = cursor.fetchone()
 
         if exist_email[0] is None:
         
-            query_update = "UPDATE aluno SET email = %s, senha = %s WHERE cpf = %s"
+            query_update = "UPDATE usuarios SET email = %s, senha = %s WHERE cpf = %s"
             cursor.execute(query_update, (email, senha, cpf))
             db_connection.commit()
             close_connection(db_connection, cursor)

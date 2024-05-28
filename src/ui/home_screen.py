@@ -15,5 +15,8 @@ class HomeScreen:
     def _setup_widgets(self, user_type):
         self.bg_image_label = ctk.CTkLabel(self.master, image=self.bg_image, text="")
         self.bg_image_label.place(relwidth=1, relheight=1)
-        self.sidebar = Sidebar(self.master, user_type)
-        self.homewidgetinit = HomeWidgets(self.master)
+        self.home_widgets = HomeWidgets(self.master, user_type)
+        self.sidebar = Sidebar(self.master, self.home_widgets, user_type)
+
+        self.home_widgets.welcomewidget(user_type)
+        self.home_widgets.placewidget('alunos' if user_type == 'aluno' else 'professor_info')
