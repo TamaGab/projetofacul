@@ -51,42 +51,42 @@ class HomeWidgets:
  
     def aluno_info_widget(self):
         self.tab_view = ctk.CTkTabview(self.master, corner_radius=24)
-        self.tab_view.add("Informações Aluno")
-        self.tab_view.add("Curso")
+        self.tab_view.add("DADOS")
+        self.tab_view.add("CURSO")
 
         # TAB INFO ALUNO
         # NOME
         self.name_icon = self.open_image('user.png', 25, 25)
-        self.label_nome = ctk.CTkLabel(self.tab_view.tab("Informações Aluno"), text=f"{session.logged_name}", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"), image=self.name_icon, compound="left", anchor="w", padx=15)
+        self.label_nome = ctk.CTkLabel(self.tab_view.tab("DADOS"), text=f"{session.logged_name}", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"), image=self.name_icon, compound="left", anchor="w", padx=15)
         self.label_nome.grid(row=0, column=0, padx=50, pady=15, sticky="ew")
-        self.add_horizontal_separator(self.tab_view.tab("Informações Aluno"), row=1, column=0, padx=50, pady=15, sticky="ew")
+        self.add_horizontal_separator(self.tab_view.tab("DADOS"), row=1, column=0, padx=50, pady=15, sticky="ew")
 
         # EMAIL
         self.email_icon = self.open_image('email.png', 25, 25)
-        self.label_email = ctk.CTkLabel(self.tab_view.tab("Informações Aluno"), text=f"{session.logged_email}", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"), image=self.email_icon, compound="left", anchor="w", padx=15)
+        self.label_email = ctk.CTkLabel(self.tab_view.tab("DADOS"), text=f"{session.logged_email}", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"), image=self.email_icon, compound="left", anchor="w", padx=15)
         self.label_email.grid(row=2, column=0, padx=50, pady=15, sticky="ew")
-        self.add_horizontal_separator(self.tab_view.tab("Informações Aluno"), row=3, column=0, padx=50, pady=15, sticky="ew")
+        self.add_horizontal_separator(self.tab_view.tab("DADOS"), row=3, column=0, padx=50, pady=15, sticky="ew")
 
         # CEP
         self.cep_icon = self.open_image('cep.png', 25, 25)
-        self.label_cep = ctk.CTkLabel(self.tab_view.tab("Informações Aluno"), text=f"{session.logged_cep}", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"), image=self.cep_icon, compound="left", anchor="w", padx=15)
+        self.label_cep = ctk.CTkLabel(self.tab_view.tab("DADOS"), text=f"{session.logged_cep}", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"), image=self.cep_icon, compound="left", anchor="w", padx=15)
         self.label_cep.grid(row=4, column=0, padx=50, pady=15, sticky="ew")
-        self.add_horizontal_separator(self.tab_view.tab("Informações Aluno"), row=5, column=0, padx=50, pady=15, sticky="ew")
+        self.add_horizontal_separator(self.tab_view.tab("DADOS"), row=5, column=0, padx=50, pady=15, sticky="ew")
 
         # ID
         self.id_icon = self.open_image('id.png', 25, 25)
-        self.label_id = ctk.CTkLabel(self.tab_view.tab("Informações Aluno"), text=f"{session.logged_id}", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"), image=self.id_icon, compound="left", anchor="w", padx=15)
+        self.label_id = ctk.CTkLabel(self.tab_view.tab("DADOS"), text=f"{session.logged_id}", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"), image=self.id_icon, compound="left", anchor="w", padx=15)
         self.label_id.grid(row=6, column=0, padx=50, pady=(15, 25), sticky="ew")
         
         # TAB CURSO
-        self.label_cursonome = ctk.CTkLabel(self.tab_view.tab("Curso"), text=f"{get_course_name(session.logged_id)}", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"))
+        self.label_cursonome = ctk.CTkLabel(self.tab_view.tab("CURSO"), text=f"{get_course_name(session.logged_id)}", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"))
         self.label_cursonome.grid(row=0, column=0, padx=50, pady=0, sticky="ew")
-        self.add_horizontal_separator(self.tab_view.tab("Curso"), row=1, column=0, padx=50, pady=15, sticky="ew")
+        self.add_horizontal_separator(self.tab_view.tab("CURSO"), row=1, column=0, padx=50, pady=15, sticky="ew")
 
-        self.label_cursocarga = ctk.CTkLabel(self.tab_view.tab("Curso"), text=f"Carga: {get_course_carga(session.logged_id)} semestres", font=("Century Gothic", 20))
+        self.label_cursocarga = ctk.CTkLabel(self.tab_view.tab("CURSO"), text=f"Carga: {get_course_carga(session.logged_id)} semestres", font=("Century Gothic", 20))
         self.label_cursocarga.grid(row=2, column=0, padx=50, pady=15, sticky="ew")
         
-        self.label_infocurso = ctk.CTkLabel(self.tab_view.tab("Curso"), text=f"Coordenador: {get_course_coordenador(session.logged_id)}", font=("Century Gothic", 20))
+        self.label_infocurso = ctk.CTkLabel(self.tab_view.tab("CURSO"), text=f"Coordenador: {get_course_coordenador(session.logged_id)}", font=("Century Gothic", 20))
         self.label_infocurso.grid(row=3, column=0, padx=50, pady=15, sticky="ew")
         return self.tab_view
     
@@ -98,21 +98,40 @@ class HomeWidgets:
         return frame
     
     def aluno_notas_widget(self):
-        frame = ctk.CTkScrollableFrame(self.master, width=450)
+        frame = ctk.CTkScrollableFrame(self.master, width=450, height=450)
+        
+        label_disciplinatitle = ctk.CTkLabel(frame, text="DISCIPLINA", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"))
+        label_disciplinatitle.grid(row=0, column=0, padx=(50,25), pady=(40,10), sticky="w")  # Alinhado à esquerda
+        
+        label_notatitle = ctk.CTkLabel(frame, text="NOTA", font=ctk.CTkFont("Century Gothic", size=22, weight="bold"))
+        label_notatitle.grid(row=0, column=2, padx=(25,50), pady=(40,10), sticky="w")  # Alinhado à esquerda
 
+       
+        self.add_horizontal_separator(frame, row=1, column=0, columnspan=3, padx=50, pady=5, sticky="ew")
+        
+      
         notas_disciplinas = get_aluno_nota(session.logged_id)
 
+    
         for idx, (nota, disciplina_nome) in enumerate(notas_disciplinas):
-            label_disciplina = ctk.CTkLabel(frame, text=disciplina_nome, font=ctk.CTkFont("Century Gothic", size=20, weight="bold"))
-            label_disciplina.grid(row=idx, column=0, padx=50, pady=15, sticky="ew")
+            current_row = 2 + 2 * idx 
+            
+            label_disciplina = ctk.CTkLabel(frame, text=disciplina_nome, font=ctk.CTkFont("Century Gothic", size=20))
+            label_disciplina.grid(row=current_row, column=0, padx=(50,25), pady=15, sticky="w")
+            
+            label_nota = ctk.CTkLabel(frame, text=nota, font=ctk.CTkFont("Century Gothic", size=20))
+            label_nota.grid(row=current_row, column=2, padx=(25,50), pady=15, sticky="w")
+            
+            self.add_vertical_separator(frame, row=current_row, column=1, pady=15)
 
+    
             if idx < len(notas_disciplinas) - 1:
-                self.add_vertical_separator(frame, row=idx, column=1, pady=15)
+                self.add_horizontal_separator(frame, row=current_row + 1, column=0, columnspan=3, padx=50, pady=5, sticky="ew")
 
-            label_nota = ctk.CTkLabel(frame, text=f"Nota: {nota}", font=ctk.CTkFont("Century Gothic", size=20, weight="bold"))
-            label_nota.grid(row=idx, column=2, padx=50, pady=15, sticky="ew")
-        
         frame.grid_columnconfigure(0, weight=1)
+        frame.grid_columnconfigure(1, weight=1)
+        frame.grid_columnconfigure(2, weight=1)
+        
         return frame
     
     def professor_info_widget(self):
@@ -169,8 +188,8 @@ class HomeWidgets:
             disciplinas_dict[disciplina_nome].append(aluno_nome)
 
         for disciplina_nome, alunos in disciplinas_dict.items():
-            tab_view.add(disciplina_nome)
-            frame = ctk.CTkScrollableFrame(tab_view.tab(disciplina_nome))
+            tab_view.add(f"{disciplina_nome}".upper())
+            frame = ctk.CTkScrollableFrame(tab_view.tab(f"{disciplina_nome}".upper()))
             
             for idx, aluno_nome in enumerate(alunos):
                 label = ctk.CTkLabel(frame, text=aluno_nome, font=ctk.CTkFont("Century Gothic", size=20, weight="bold"))
@@ -190,9 +209,9 @@ class HomeWidgets:
         separator.grid(row=row, column=column, columnspan=columnspan, padx=padx, pady=pady, sticky=sticky)
         return separator
     
-    def add_vertical_separator(self, master, row, column, pady=0):
+    def add_vertical_separator(self, master, row, column, pady=0, padx=0):
         separator = ttk.Separator(master, orient="vertical")
-        separator.grid(row=row, column=column, rowspan=1, pady=pady, sticky="ns")
+        separator.grid(row=row, column=column, rowspan=1, pady=pady, padx=padx, sticky="ns")
         return separator
     
     def open_image(self, image_name, width, height):
