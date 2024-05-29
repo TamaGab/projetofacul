@@ -1,7 +1,7 @@
 # src/backend/auth.py
 from .database import *
 from ui.components.messagebox import show_invalid_password_message, show_invalid_cpf_message, show_missing_info_message, show_existing_email_message, show_invalid_passuser_message
-from backend.session import alunosession, professorsession
+from backend.session import session
 
 def auth_user(email, senha):
     db_connection, cursor = get_cursor()
@@ -20,12 +20,12 @@ def auth_user(email, senha):
         return None
     
     if usuario[2] != None:
-        alunosession.update(email)
+        session.update(email)
         close_connection(db_connection, cursor)
         return "aluno"
 
     if usuario[3] != None:
-        professorsession.update(email)   
+        session.update(email)   
         close_connection(db_connection, cursor)
         return "professor"
     

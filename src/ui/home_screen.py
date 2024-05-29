@@ -18,5 +18,5 @@ class HomeScreen:
         self.home_widgets = HomeWidgets(self.master, user_type)
         self.sidebar = Sidebar(self.master, self.home_widgets, user_type)
 
-        self.home_widgets.welcomewidget(user_type)
-        self.home_widgets.placewidget('alunos' if user_type == 'aluno' else 'professor_info')
+        self.home_widgets.welcome_widget(user_type)
+        self.home_widgets.place_widget('alunos' if user_type == 'aluno' else 'professor_info')

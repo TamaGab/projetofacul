@@ -52,7 +52,7 @@ class Sidebar:
             widget.bind("<Enter>", self._expand_sidebar)
     
     def show_widget(self, widget_name):
-        self.home_widgets.placewidget(widget_name)
+        self.home_widgets.place_widget(widget_name)
     
     def _expand_sidebar(self, event):
         if hasattr(self.master, 'shrink_sidebar_after_id'):
