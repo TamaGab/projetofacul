@@ -32,5 +32,12 @@ class Session:
     
         close_connection(db_connection, cursor)
     
+    def clear(self):
+        self.logged_id = None
+        self.logged_cpf = None
+        self.logged_name = None
+        self.logged_email = None
+        self.logged_cep = None
+
     
 session = Session()

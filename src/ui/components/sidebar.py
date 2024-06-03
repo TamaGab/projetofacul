@@ -3,6 +3,7 @@ from PIL import Image
 import os
 from backend.homebuttons import buttons_aluno, buttons_professor
 from functools import partial
+from backend.auth import logoff
 
 class Sidebar:
     def __init__(self, master, home_widgets, user_type):
@@ -46,8 +47,13 @@ class Sidebar:
                 
                 button_place.bind("<Enter>", self._expand_sidebar)
                 button_place.bind("<Leave>", self._schedule_shrink_sidebar)
+                
+                button_logoff = ctk.CTkButton(self.frame_menu, width=280, height=38, text="SAIR", fg_color="#41c269", corner_radius=32,
+                                          hover_color="#4F5250", font=("Century Gothic", 20), text_color="#FFFFFF",
+                                          command=lambda: logoff(self))
+                button_logoff.grid(row=len(buttons)+1, column=0, padx=30, pady=(15, 5), columnspan=6)
 
-        for widget in [self.frame_menu, self.frame_shrinkmenu, self.logo_label]:
+        for widget in [self.frame_menu, self.frame_shrinkmenu, self.logo_label, button_logoff]:
             widget.bind("<Leave>", self._schedule_shrink_sidebar)
             widget.bind("<Enter>", self._expand_sidebar)
     
